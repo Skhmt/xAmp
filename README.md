@@ -20,7 +20,8 @@ The internal playlist isn't tied to playlist text files, modifying the playlist 
 ## Running in Windows x64
 
 1. Go to the [releases](https://github.com/Skhmt/xAmp/releases) page and get the latest .zip
-2. Extract and run `xAmp.exe`
+2. Extract everything and put it anywhere
+3. Run `xAmp.exe`
 
 ## Building
 
