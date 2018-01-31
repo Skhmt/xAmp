@@ -1,7 +1,9 @@
 # xAmp
-Cross platform youtube video player with its own independent playlist.
+Cross platform youtube video player with an independent playlist from youtube.
 
-The internal playlist isn't tied to playlist text files, modifying the playlist won't make any file changes unless you save them, but the current playlist will be saved internally for the next time you open xAmp.
+The internal playlist isn't tied to playlist text files, modifying the internal playlist won't make any file changes unless you save them, but the current playlist will be saved separately.
+
+Opening a playlist will overwrite the internal playlist, not add to it.
 
 ## Hotkeys
 - `space`: play/pause the video
