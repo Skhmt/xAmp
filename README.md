@@ -1,7 +1,19 @@
 # xAmp
 Cross platform youtube video player with its own independent playlist.
 
-Without ads.
+The internal playlist isn't tied to playlist text files, modifying the playlist won't make any file changes unless you save them, but the current playlist will be saved internally for the next time you open xAmp.
+
+## Hotkeys
+- `space`: play/pause the video
+- `ctrl` + `arrow right`: next video
+- `ctrl` + `arrow left`: previous video
+- `ctrl` + `arrow up`: volume up 10%
+- `ctrl` + `arrow down`: volume down 10%
+- `ctrl` + `s`: save current playlist
+- `ctrl` + `o`: open playlist
+- `delete`: delete selected song from internal playlist
+- `shift` + `arrow up`: move selected song up in internal playlist
+- `shift` + `arrow down`: move selected song down in internal playlist
 
 ## Running in Windows x64
 
