@@ -1,6 +1,5 @@
-
-
 <!DOCTYPE html>
+
 <html>
 <head>
 	<title>
@@ -11,8 +10,6 @@
 	<script src="js/vue-2.5.13.min.js"></script>
 	<script src="js/fontawesome-all.min.js"></script>
 	<link rel="stylesheet" href="css/app.css">
-
-	<!-- <script src="js/server.js"></script> -->
 </head>
 <body>
 
@@ -23,7 +20,7 @@
 		</div>
 		<div id="mainContent" @click.self="clear">
 			<div id="ytPlayer" class="fullWidth"></div>
-			<div id="ytCover" style="height: 267px; width: 476px; margin: 0; padding: 0; position: fixed; background: black; top: 42px; left: 12px;"></div>
+			<div id="ytCover"><img src="img/icon.png" style="height: 100%; width: auto;"></div>
 			<div id="scrubContainer" class="fullWidth"><div id="scrub"></div></div>
 			<div id="controlsContainer" class="fullWidth" @click="clear">
 				<div id="volumeContainer"><div id="volume"></div></div>

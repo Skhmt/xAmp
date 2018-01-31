@@ -205,6 +205,18 @@ position: relative;*/
   right: 11px;
 }
 
+#ytCover {
+  height: 268px;
+  width: 476px;
+  margin: 0;
+  padding: 0;
+  position: fixed;
+  background: black;
+  top: 31px;
+  left: 12px;
+  text-align: center;
+}
+
 .vidQueue {
   font-size: 0.8em;
 
