@@ -1,0 +1,20 @@
+{
+	"name": "xAmp",
+	"description": "Youtube music player",
+	"version": "0.1.0",
+	"main": "app.html",
+	"dependencies": {
+	},
+	"window": {
+		"min_width": 500,
+		"min_height": 750,
+		"width": 500,
+		"height": 750,
+		"title": "xAmp",
+		"frame": false,
+		"toolbar": false,
+		"transparent": true,
+		"icon": "icon.png"
+	},
+  "chromium-args": "--enable-experimental-web-platform-features --disable-raf-throttling"
+}

@@ -1,0 +1,231 @@
+*:focus {
+	outline: 0 !important;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.drag {
+  -webkit-app-region: drag;
+}
+
+body {
+  height: 100vh;
+  width: 100vw;
+  padding: 0px;
+  margin: 0;
+  overflow: hidden;
+  word-wrap: break-word;
+
+  border: solid 1px black;
+
+  background: linear-gradient(-45deg,LightSkyBlue,transparent), linear-gradient(45deg,Orchid,transparent), linear-gradient(Khaki,transparent);
+  background-blend-mode: multiply;
+  box-shadow: inset 0px 0px 300px 10px rgba(0,0,0,0.8);
+}
+
+.fullWidth {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.noSelect, button, .fa-btn {
+  -webkit-user-select: none;
+  cursor: default;
+  -webkit-user-drag: none;
+}
+
+.selectable {
+  -webkit-user-select: text;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+button {
+  padding: 6px 8px 6px 8px;
+  margin: 0;
+  border: 1px solid rgba(10,10,10,1);
+  background-color: rgba(0,0,0,0.8);
+  box-shadow: 0px 3px 7px rgba(0,0,0,1);
+  color: rgba(240,240,240,1);
+}
+button:hover, button:active {
+  color: rgba(30,120,255,1);
+}
+button:active {
+  box-shadow: 0 0 0;
+}
+
+button.disabled, button.disabled:hover, button.disabled:active {
+  background-color: rgba(30,30,30,0.8);
+  color: rgba(240,240,240,1);
+  box-shadow: 0 0 0;
+}
+
+/*background: rgba(10,10,10,0.6);
+backdrop-filter: blur(6px);
+position: relative;*/
+.glassTitle {
+  text-shadow: 0px 2px 5px rgba(0,0,0,1);
+  margin: 0 0 10px 0;
+  font-weight: normal;
+  color: rgba(255,255,255,1);
+  letter-spacing: 1pt;
+  word-spacing: 2pt;
+  font-size: 1em;
+  text-align: left;
+  font-family: "trebuchet MS", sans-serif;
+  line-height: 1;
+  display: inline-block;
+  vertical-align: top;
+}
+.glass {
+  padding: 10px;
+  border: 1px solid rgba(10,10,10,1);
+  background: rgba(20,20,20,0.8);
+  color: rgba(240,240,240,1);
+  font-family: "Verdana", "Arial", sans-serif;
+  box-shadow: 0px 5px 10px rgba(0,0,0,1);
+  display: inline-block;
+  vertical-align: top;
+}
+
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background-color: rgba(100,100,100,0); }
+::-webkit-scrollbar-thumb {
+  background-color: rgba(240,240,240,1);
+  box-shadow: 3px 3px 5px rgba(0,0,0,1);
+}
+
+#volumeContainer {
+  width: 125px;
+  height: 20px;
+  padding: 0;
+  margin: 0;
+  display: inline-block;
+  background-color: rgba(50,50,50,0.9);
+  vertical-align: -4px;
+  box-shadow: 0 3px 5px rgba(0,0,0,1);
+  border: solid 1px black;
+}
+
+#scrubContainer {
+  height: 20px;
+  background-color: rgba(50,50,50,0.9);
+  box-shadow: 0 3px 5px rgba(0,0,0,1);
+  border: solid 1px black;
+}
+
+#queueContainer {
+  height: 306px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  word-wrap: break-word;
+  padding: 0;
+}
+
+#scrub {
+  height: 100%;
+  background-color: rgba(30,120,255,1);
+  margin: 0;
+  padding: 0;
+}
+
+#volume {
+  width: 100%;
+  height: 100%;
+  background-color: rgba(30,120,255,1);
+}
+
+#ytPlayer {
+  border: solid 1px black;
+  height: calc(100vh - 481px);
+  box-shadow: 0 3px 5px rgba(0,0,0,1);
+}
+
+#vidTitle {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  display: inline-block;
+  width: calc(100% - 40px);
+  height: 29px;
+  padding: 8px;
+  margin: 0;
+}
+
+#closeButton {
+  position: absolute;
+  right: 1px;
+  top: 1px;
+  box-shadow: none;
+}
+
+#vidField {
+  height: 29px;
+  width: 200px;
+  padding: 5px;
+  margin: 0;
+}
+
+#mainContent {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 10px;
+}
+
+#mainContent > div {
+  margin-top: 10px;
+}
+
+#titleBar {
+  background: rgba(0,0,0,0.5);
+  border-bottom: solid 1px black;
+}
+
+#controlsContainer {
+  position: relative;
+}
+
+#time {
+  position: absolute;
+  right: 0;
+  top: 8px;
+}
+
+#selectionControls {
+  position: absolute;
+  right: 11px;
+}
+
+.vidQueue {
+  font-size: 0.8em;
+
+  text-overflow: ellipsis;
+  overflow: hidden;
+  width: 100%;
+  white-space: nowrap;
+  padding: 2px 4px 2px 4px;
+}
+.vidQueue-item {
+  transition: all 1s;
+  display: block;
+  margin-right: 10px;
+}
+.vidQueue-enter {
+  opacity: 0;
+  transform: translateX(30px);
+}
+.vidQueue-leave-active {
+  display: none;
+}
+.vidQueue-move {
+  transition: transform 1s;
+}

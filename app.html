@@ -1,0 +1,69 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>
+		xAmp
+	</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<script src="js/vue-2.5.13.min.js"></script>
+	<script src="js/fontawesome-all.min.js"></script>
+	<link rel="stylesheet" href="css/app.css">
+
+	<script src="js/server.js"></script>
+</head>
+<body>
+
+	<div id="app" style="width: 100%;" class="noSelect">
+		<div id="titleBar" class="fullWidth">
+			<div id="vidTitle" class="glassTitle drag" v-html="currentVid.title"></div>
+			<button id="closeButton" @click="close" class="selectable" title="Quit"><i class="fas fa-fw fa-times"></i></button>
+		</div>
+		<div id="mainContent" @click.self="clear">
+			<iframe id="ytPlayer" src="" class="fullWidth"></iframe>
+			<div id="scrubContainer" class="fullWidth"><div id="scrub"></div></div>
+			<div id="controlsContainer" class="fullWidth" @click="clear">
+				<div id="volumeContainer"><div id="volume"></div></div>
+				<button @click="prev" title="Previous video"><i class="fas fa-fw fa-step-backward"></i></button>
+				<button id="playpause" @click="playpause" title=""><i class="fas fa-fw fa-pause"></i></button>
+				<button @click="next" title="Next video"><i class="fas fa-fw fa-step-forward"></i></button>
+				&nbsp;&nbsp;
+				<button @click="shuffle" title="Shuffle playlist"><i class="fas fa-fw fa-random"></i></button>
+				<button @click="hidevid" title="Toggle video"><i class="fas fa-fw fa-eye-slash"></i></button>
+				<span id="time" class="glassTitle">{{ currentTime }} / {{ duration }}</span>
+			</div>
+			<div id="queueContainer" @click.self="clear" class="glass fullWidth">
+				<transition-group name="vidQueue" tag="ul">
+					<li class="vidQueue"
+						v-for="(vid, index) in vidQueue" 
+						:id="'vq'+index"
+						:key="vid.id"
+						@click="select(index)">
+						<em v-html="vid.title"></em>
+					</li>
+				</transition-group>
+			</div>
+			<div @click.self="clear" class="fullWidth">
+				<button @click="open" title="Open playlist"><i class="fas fa-fw fa-folder-open"></i></button>
+				<button @click="save" title="Save playlist"><i class="fas fa-fw fa-save"></i></button>
+				&nbsp;&nbsp;
+				<input id="vidField" @keydown.enter="add" v-model="vidInput" class="glass selectable" placeholder="youtube url">
+				<button @click="add" title="Add youtube url"><i class="fas fa-fw fa-plus"></i></button>
+				<span id="selectionControls">
+					<button @click="up" title="Move selection up"><i class="fas fa-fw fa-arrow-up"></i></button>
+					<button @click="down" title="Move selection down"><i class="fas fa-fw fa-arrow-down"></i></button>
+					<button @click="remove" title="Delete selection"><i class="fas fa-fw fa-trash-alt"></i></button>
+				</span>
+			</div>
+		</div> <!-- #mainContent -->
+	</div> <!-- #app -->
+
+	<!-- For nw.js to generate file dialogs -->
+	<input id="openFile" style="display:none;" type="file">
+	<input id="saveFile" style="display:none;" type="file" nwsaveas="playlist.txt">
+
+	<script src="js/app.js"></script>
+</body>
+</html>
