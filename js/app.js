@@ -12,7 +12,7 @@ let data = {
 	vidQueue: [],
 	currentVid: {
 		id: 'XIMLoLxmTDw',
-		title: 'TubeAmp',
+		title: 'xAmp',
 	},
 	currentTime: '00:00',
 	duration: '00:00',
@@ -20,7 +20,6 @@ let data = {
 	blockScrub: false,
 	blockVol: false,
 	selected: null,
-	ready: false,
 	cache: {
 		video_ad: undefined,
 		scrub: undefined,
@@ -29,16 +28,11 @@ let data = {
 		volume: undefined,
 		pp: undefined,
 	},
+	refreshed: false,
 };
-
-document.getElementById('ytPlayer').src = 'http://localhost:65432/';
 
 const loadQueue = localStorage.getItem('vidQueue');
 if (loadQueue) data.vidQueue = JSON.parse(loadQueue);
-
-requestAnimationFrame(songStateChecker);
-
-setPlayer();
 
 let vm = new Vue({
 	el: '#app',
@@ -151,13 +145,40 @@ let vm = new Vue({
 
 // functions
 
+function onYouTubeIframeAPIReady() {
+	ytPlayer = new YT.Player('ytPlayer', {
+		videoId: 'XIMLoLxmTDw', // 10 hr black screen
+		playerVars: {
+			fs: 0,
+			rel: 0,
+			modestbranding: 1,
+			iv_load_policy: 3,
+			controls: 0,
+			showinfo: 0,
+		},
+		events: {
+			'onReady': () => {
+				if (!data.refreshed) {
+					document.getElementById('ytPlayer').contentWindow.location.reload();
+					data.refreshed = true;
+				}
+				else {
+					document.getElementById('ytCover').remove();
+					requestAnimationFrame(songStateChecker);
+				}
+			}
+		},
+	});
+}
+
 // "game" loop
 function songStateChecker() {
 	try {
 		// unstarted: -1, ended: 0, playing: 1, paused: 2, buffering: 3, cued: 5
 		const state = ytPlayer.getPlayerState();
-		if (state === -1 || state === 0) nextVid();
+		if (state === -1 || state === 0 || state === 5) nextVid();
 
+		// updating meta data
 		const currentTime = ytPlayer.getCurrentTime();
 		const duration = ytPlayer.getDuration();
 		data.currentTime = secondsToMinutes(currentTime);
@@ -182,11 +203,13 @@ function songStateChecker() {
 			});
 		}
 
+		// updating video scrub bar
 		if (!data.blockScrub) {
 			const scrubWidth = (currentTime / duration) * data.cache.scrubContainer.clientWidth;
 			data.cache.scrub.style.width = scrubWidth + 'px';
 		}
 
+		// updating volume bar
 		if (!data.blockVol) {
 			const volWidth = ytPlayer.getVolume() * 0.01 * data.cache.volumeContainer.clientWidth;
 			data.cache.volume.style.width = volWidth + 'px';
@@ -217,14 +240,6 @@ function songStateChecker() {
 		} else {
 			// next frame set it to "display: none"
 			data.cache.video_ad.style.display = 'none';
-		}
-
-		// do these things once
-		if (!data.ready && state === 5) {
-			data.ready = true;
-
-			// start playing
-			nextVid();
 		}
 	} catch (e) {}
 	requestAnimationFrame(songStateChecker);
@@ -365,18 +380,6 @@ function clearSelected() {
 		let el = document.getElementById('vq'+data.selected);
 		el.style.background = '';
 		data.selected = null;
-	}
-}
-
-function setPlayer() {
-	ytPlayer = document.getElementById('ytPlayer').contentWindow.ytPlayer;
-	if (ytPlayer === undefined || ytPlayer === null) {
-		setTimeout(setPlayer, 50);
-	}
-	else {
-		ytPlayer.addEventListener('onError', e => {
-			console.log(`Youtube error ${e.data}`);
-		});
 	}
 }
 

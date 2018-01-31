@@ -7,12 +7,12 @@
 		xAmp
 	</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-
+	<script src="https://www.youtube.com/iframe_api"></script>
 	<script src="js/vue-2.5.13.min.js"></script>
 	<script src="js/fontawesome-all.min.js"></script>
 	<link rel="stylesheet" href="css/app.css">
 
-	<script src="js/server.js"></script>
+	<!-- <script src="js/server.js"></script> -->
 </head>
 <body>
 
@@ -22,7 +22,8 @@
 			<button id="closeButton" @click="close" class="selectable" title="Quit"><i class="fas fa-fw fa-times"></i></button>
 		</div>
 		<div id="mainContent" @click.self="clear">
-			<iframe id="ytPlayer" src="" class="fullWidth"></iframe>
+			<div id="ytPlayer" class="fullWidth"></div>
+			<div id="ytCover" style="height: 267px; width: 476px; margin: 0; padding: 0; position: fixed; background: black; top: 42px; left: 12px;"></div>
 			<div id="scrubContainer" class="fullWidth"><div id="scrub"></div></div>
 			<div id="controlsContainer" class="fullWidth" @click="clear">
 				<div id="volumeContainer"><div id="volume"></div></div>
