@@ -14,6 +14,8 @@ The internal playlist isn't tied to playlist text files, modifying the playlist 
 - `delete`: delete selected song from internal playlist
 - `shift` + `arrow up`: move selected song up in internal playlist
 - `shift` + `arrow down`: move selected song down in internal playlist
+- `arrow up`: select the next song up, or the top/first song if no song is selected
+- `arrow down`: select the next song down, or the bottom/last song if no song is selected
 
 ## Running in Windows x64
 
