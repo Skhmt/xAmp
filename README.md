@@ -3,6 +3,11 @@ Cross platform youtube video player with its own independent playlist.
 
 Without ads.
 
+## Running in Windows x64
+
+1. Go to the [releases](https://github.com/Skhmt/xAmp/releases) page and get the latest .zip
+2. Extract and run `xAmp.exe`
+
 ## Building
 
 1. Download [nw.js](https://nwjs.io/)
