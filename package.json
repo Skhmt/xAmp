@@ -14,7 +14,6 @@
 		"frame": false,
 		"toolbar": false,
 		"transparent": true,
-		"icon": "icon.png"
-	},
-  "chromium-args": "--enable-experimental-web-platform-features --disable-raf-throttling"
+		"icon": "img/icon.png"
+	}
 }

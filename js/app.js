@@ -235,7 +235,6 @@ function songStateChecker() {
 		// ghetto ad blocking...
 		if (data.cache.video_ad === undefined) {
 			data.cache.video_ad = document.getElementById('ytPlayer').
-				contentWindow.document.getElementById('ytPlayerContainer').
 				contentWindow.document.getElementsByClassName('video-ads')[0];
 		} else {
 			// next frame set it to "display: none"
@@ -344,7 +343,6 @@ function addVid(videoid) {
 			title: title,
 		};
 		data.vidQueue.push(pushObj);
-		// log( `* "${videotitle}" added to the streamer song queue.` );
 
 		saveQueue();
 
@@ -384,7 +382,7 @@ function clearSelected() {
 }
 
 function volMove(e) {
-	// let pixelsFromLeft = e.pageX - $vc.offsetLeft;
+	// let pixelsFromLeft = e.pageX - data.cache.volumeContainer.offsetLeft;
 	let pixelsFromLeft = e.pageX - 12;
 	const containerWidth = data.cache.volumeContainer.clientWidth;
 	if (pixelsFromLeft > containerWidth) pixelsFromLeft = containerWidth;
@@ -433,7 +431,7 @@ document.getElementById('openFile').addEventListener('change', evt => {
 $body.addEventListener('mouseup', e => {
 	if (data.blockVol) {
 		$body.removeEventListener('mousemove', volMove);
-		// let pixelsFromLeft = e.pageX - $vc.offsetLeft;
+		// let pixelsFromLeft = e.pageX - data.cache.volumeContainer.offsetLeft;
 		let pixelsFromLeft = e.pageX - 12;
 		const containerWidth = data.cache.volumeContainer.clientWidth;
 		if (pixelsFromLeft > containerWidth) pixelsFromLeft = containerWidth;
