@@ -13,11 +13,12 @@ Opening a playlist will overwrite the internal playlist, not add to it.
 - `ctrl` + `arrow down`: volume down 10%
 - `ctrl` + `s`: save current playlist
 - `ctrl` + `o`: open playlist
-- `delete`: delete selected song from internal playlist
-- `shift` + `arrow up`: move selected song up in internal playlist
-- `shift` + `arrow down`: move selected song down in internal playlist
-- `arrow up`: select the next song up, or the top/first song if no song is selected
-- `arrow down`: select the next song down, or the bottom/last song if no song is selected
+- `delete`: delete selected video from internal playlist
+- `shift` + `arrow up`: move selected video up in internal playlist
+- `shift` + `arrow down`: move selected video down in internal playlist
+- `arrow up`: select the next video up, or the top/first video if no video is selected
+- `arrow down`: select the next video down, or the bottom/last video if no video is selected
+- `esc`: unselects any video and clears input text
 
 ## Running in Windows x64
 
