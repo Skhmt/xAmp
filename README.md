@@ -22,7 +22,7 @@ Opening a playlist will overwrite the internal playlist, not add to it.
 
 ## Running in Windows x64
 
-1. Go to the [releases](https://github.com/Skhmt/xAmp/releases) page and get the latest .zip
+1. Go to the [releases](https://github.com/Skhmt/xAmp/releases) page and get the latest .zip named something like: `xAmp-#.#.#-win-x64.zip`
 2. Extract everything and put it anywhere
 3. Run `xAmp.exe`
 
