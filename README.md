@@ -26,7 +26,7 @@ Opening a playlist will overwrite the internal playlist, not add to it.
 2. Extract everything and put it anywhere
 3. Run `xAmp.exe`
 
-## Building
+## Building (if you're not on windows 64-bit or you just want to build it from scratch)
 
 1. Download [nw.js](https://nwjs.io/)
 2. Place everything into a folder named `package.nw`
