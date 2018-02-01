@@ -7,7 +7,7 @@ The internal playlist isn't tied to playlist text files, modifying the internal 
 
 Opening a playlist will overwrite the internal playlist, not add to it.
 
-## Hotkeys
+## Hotkeys (some of these don't work on macOS)
 - `space`: play/pause the video
 - `ctrl` + `arrow right`: next video
 - `ctrl` + `arrow left`: previous video
