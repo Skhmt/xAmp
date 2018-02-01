@@ -508,18 +508,26 @@ window.onkeydown = e => {
 		e.preventDefault();
 		if (typeof data.selected === 'number' && data.selected > 0) {
 			select(data.selected - 1);
+			updateScroll();
 		} 
 		else if (typeof data.vidQueue.length === 'number' && data.vidQueue.length > 0) {
 			select(0);
+			updateScroll();
 		}
 	}
 	else if (e.code === 'ArrowDown' && !e.shiftKey && !e.ctrlKey) {
 		e.preventDefault();
 		if (typeof data.selected === 'number' && data.selected < data.vidQueue.length - 1) {
 			select(data.selected + 1);
+			updateScroll();
 		}
 		else if (typeof data.vidQueue.length === 'number' && data.vidQueue.length > 0) {
 			select(data.vidQueue.length - 1);
+			updateScroll();
 		}
+	}
+
+	function updateScroll() {
+		document.getElementById('vq'+data.selected).scrollIntoView({behavior: 'instant', block: 'nearest'});
 	}
 };
