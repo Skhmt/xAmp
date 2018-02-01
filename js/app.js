@@ -466,6 +466,11 @@ window.onkeydown = e => {
 		e.preventDefault(); // prevents a previously pressed button from activating
 		playpause();
 	}
+	else if (e.code === 'Escape') {
+		e.preventDefault();
+		clearSelected();
+		data.vidInput = '';
+	}
 	else if (e.code === 'ArrowRight' && e.ctrlKey) {
 		e.preventDefault();
 		nextVid();
