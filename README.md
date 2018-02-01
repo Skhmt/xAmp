@@ -27,6 +27,13 @@ Opening a playlist will overwrite the internal playlist, not add to it.
 3. Run `xAmp.exe`
 4. If the `Windows protected your PC` window comes up, click `More info` then `Run anyway`
 
+## Running in macOS
+
+1. Go to the [releases](https://github.com/Skhmt/xAmp/releases) page and get the latest .zip named something like: `xAmp-#.#.#-macOS.zip`
+2. Extract everything and put it anywhere
+3. Run `xAmp`
+4. Go to `System Preferences` > `Security & Privacy` and click `Open Anyway`
+
 ## Building (if you're not on windows 64-bit or you just want to build it from scratch)
 
 1. Download [nw.js](https://nwjs.io/)
