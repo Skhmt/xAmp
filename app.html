@@ -16,7 +16,8 @@
 	<div id="app" style="width: 100%;" class="noSelect">
 		<div id="titleBar" class="fullWidth">
 			<div id="vidTitle" class="glassTitle drag" v-html="currentVid.title"></div>
-			<button id="closeButton" @click="close" class="selectable" title="Quit"><i class="fas fa-fw fa-times"></i></button>
+			<button id="minimizeButton" @click="minimize" title="Minimize"><i class="fas fa-fw fa-minus"></i></button>
+			<button id="closeButton" @click="close" title="Quit"><i class="fas fa-fw fa-times"></i></button>
 		</div>
 		<div id="mainContent" @click.self="clear">
 			<div id="ytPlayer" class="fullWidth"></div>

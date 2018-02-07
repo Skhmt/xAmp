@@ -1,3 +1,16 @@
+:root {
+  /* Variables */
+  
+  --main-text: rgba(240,240,240,1);
+  --splashy: rgba(30,120,255,1);
+
+  --minimize-background: rgba(52,73,94,1.0);
+  --close-background: rgba(207,0,15,1);
+  --el-background: rgba(20,20,20,0.8);
+  --el-border: rgba(0,0,0,1);
+  --el-shadow: rgba(0,0,0,0.8);
+}
+
 *:focus {
 	outline: 0 !important;
 }
@@ -22,7 +35,7 @@ body {
 
   background: linear-gradient(-45deg,LightSkyBlue,transparent), linear-gradient(45deg,Orchid,transparent), linear-gradient(Khaki,transparent);
   background-blend-mode: multiply;
-  box-shadow: inset 0px 0px 300px 10px rgba(0,0,0,0.8);
+  box-shadow: inset 0px 0px 300px 10px var(--el-shadow);
 }
 
 .fullWidth {
@@ -50,21 +63,21 @@ ul {
 button {
   padding: 6px 8px 6px 8px;
   margin: 0;
-  border: 1px solid rgba(10,10,10,1);
-  background-color: rgba(0,0,0,0.8);
-  box-shadow: 0px 3px 7px rgba(0,0,0,1);
-  color: rgba(240,240,240,1);
+  border: 1px solid var(--el-border);
+  background-color: var(--el-background);
+  box-shadow: 0px 3px 7px var(--el-shadow);
+  color: var(--main-text);
 }
 button:hover, button:active {
-  color: rgba(30,120,255,1);
+  color: var(--splashy);
 }
 button:active {
   box-shadow: 0 0 0;
 }
 
 button.disabled, button.disabled:hover, button.disabled:active {
-  background-color: rgba(30,30,30,0.8);
-  color: rgba(240,240,240,1);
+  background-color: var(--el-background);
+  color: var(--main-text);
   box-shadow: 0 0 0;
 }
 
@@ -72,10 +85,10 @@ button.disabled, button.disabled:hover, button.disabled:active {
 backdrop-filter: blur(6px);
 position: relative;*/
 .glassTitle {
-  text-shadow: 0px 2px 5px rgba(0,0,0,1);
+  text-shadow: 0px 2px 5px var(--el-shadow);
   margin: 0 0 10px 0;
   font-weight: normal;
-  color: rgba(255,255,255,1);
+  color: var(--main-text);
   letter-spacing: 1pt;
   word-spacing: 2pt;
   font-size: 1em;
@@ -87,20 +100,20 @@ position: relative;*/
 }
 .glass {
   padding: 10px;
-  border: 1px solid rgba(10,10,10,1);
-  background: rgba(20,20,20,0.8);
-  color: rgba(240,240,240,1);
+  border: 1px solid var(--el-border);
+  background: var(--el-background);
+  color: var(--main-text);
   font-family: "Verdana", "Arial", sans-serif;
-  box-shadow: 0px 5px 10px rgba(0,0,0,1);
+  box-shadow: 0px 5px 10px var(--el-shadow);
   display: inline-block;
   vertical-align: top;
 }
 
 ::-webkit-scrollbar { width: 10px; }
-::-webkit-scrollbar-track { background-color: rgba(100,100,100,0); }
+::-webkit-scrollbar-track { background-color: rgba(0,0,0,0); }
 ::-webkit-scrollbar-thumb {
-  background-color: rgba(240,240,240,1);
-  box-shadow: 3px 3px 5px rgba(0,0,0,1);
+  background-color: var(--main-text);
+  box-shadow: 3px 3px 5px var(--el-shadow);
 }
 
 #volumeContainer {
@@ -109,17 +122,17 @@ position: relative;*/
   padding: 0;
   margin: 0;
   display: inline-block;
-  background-color: rgba(50,50,50,0.9);
-  vertical-align: -4px;
-  box-shadow: 0 3px 5px rgba(0,0,0,1);
-  border: solid 1px black;
+  background-color: var(--el-background);
+  vertical-align: -5px;
+  box-shadow: 0 3px 5px var(--el-shadow);
+  border: solid 1px var(--el-border);
 }
 
 #scrubContainer {
   height: 20px;
-  background-color: rgba(50,50,50,0.9);
-  box-shadow: 0 3px 5px rgba(0,0,0,1);
-  border: solid 1px black;
+  background-color: var(--el-background);
+  box-shadow: 0 3px 5px var(--el-shadow);
+  border: solid 1px var(--el-border);
 }
 
 #queueContainer {
@@ -132,7 +145,7 @@ position: relative;*/
 
 #scrub {
   height: 100%;
-  background-color: rgba(30,120,255,1);
+  background-color: var(--splashy);
   margin: 0;
   padding: 0;
 }
@@ -140,13 +153,13 @@ position: relative;*/
 #volume {
   width: 100%;
   height: 100%;
-  background-color: rgba(30,120,255,1);
+  background-color: var(--splashy);
 }
 
 #ytPlayer {
-  border: solid 1px black;
+  border: solid 1px var(--el-border);
   height: calc(100vh - 481px);
-  box-shadow: 0 3px 5px rgba(0,0,0,1);
+  box-shadow: 0 3px 5px var(--el-shadow);
 }
 
 #vidTitle {
@@ -154,7 +167,7 @@ position: relative;*/
   overflow: hidden;
   white-space: nowrap;
   display: inline-block;
-  width: calc(100% - 40px);
+  width: calc(100% - 70px);
   height: 29px;
   padding: 8px;
   margin: 0;
@@ -164,7 +177,28 @@ position: relative;*/
   position: absolute;
   right: 1px;
   top: 1px;
+  margin: 0;
   box-shadow: none;
+  background-color: black;
+}
+#closeButton:hover, #closeButton:active {
+  color: var(--main-text);
+  background-color: var(--close-background);
+  border-color: var(--close-background);
+}
+
+#minimizeButton {
+  position: absolute;
+  right: 36px;
+  top: 1px;
+  margin: 0;
+  box-shadow: none;
+  background-color: black;
+}
+#minimizeButton:hover, #minimizeButton:active {
+  color: var(--main-text);
+  background-color: var(--minimize-background);
+  border-color: var(--minimize-background);
 }
 
 #vidField {
@@ -186,8 +220,8 @@ position: relative;*/
 }
 
 #titleBar {
-  background: rgba(0,0,0,0.5);
-  border-bottom: solid 1px black;
+  background: var(--el-background);
+  border-bottom: solid 1px var(--el-border);
 }
 
 #controlsContainer {

@@ -62,6 +62,9 @@ let vm = new Vue({
 		close: function () {
 			nw.App.quit();
 		},
+		minimize: function () {
+			nw.Window.get().minimize();
+		},
 		select: function (ind) {
 			select(ind);
 		},
