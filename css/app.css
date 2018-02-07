@@ -1,9 +1,8 @@
+
+/* Variables */
 :root {
-  /* Variables */
-  
   --main-text: rgba(240,240,240,1);
   --splashy: rgba(30,120,255,1);
-
   --minimize-background: rgba(52,73,94,1.0);
   --close-background: rgba(207,0,15,1);
   --el-background: rgba(20,20,20,0.8);
@@ -11,16 +10,14 @@
   --el-shadow: rgba(0,0,0,0.8);
 }
 
-*:focus {
-	outline: 0 !important;
-}
-
+/* because content-box sucks */
 * {
   box-sizing: border-box;
 }
 
-.drag {
-  -webkit-app-region: drag;
+/* gets rid of a nw.js specific thing where everything you click has a blue border */
+*:focus {
+	outline: 0 !important;
 }
 
 body {
@@ -36,22 +33,6 @@ body {
   background: linear-gradient(-45deg,LightSkyBlue,transparent), linear-gradient(45deg,Orchid,transparent), linear-gradient(Khaki,transparent);
   background-blend-mode: multiply;
   box-shadow: inset 0px 0px 300px 10px var(--el-shadow);
-}
-
-.fullWidth {
-  width: 100%;
-  margin: 0;
-  padding: 0;
-}
-
-.noSelect, button, .fa-btn {
-  -webkit-user-select: none;
-  cursor: default;
-  -webkit-user-drag: none;
-}
-
-.selectable {
-  -webkit-user-select: text;
 }
 
 ul {
@@ -81,9 +62,26 @@ button.disabled, button.disabled:hover, button.disabled:active {
   box-shadow: 0 0 0;
 }
 
-/*background: rgba(10,10,10,0.6);
-backdrop-filter: blur(6px);
-position: relative;*/
+.drag {
+  -webkit-app-region: drag;
+}
+
+.noSelect {
+  -webkit-user-select: none;
+  cursor: default;
+  -webkit-user-drag: none;
+}
+
+.selectable {
+  -webkit-user-select: text;
+}
+
+.fullWidth {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
 .glassTitle {
   text-shadow: 0px 2px 5px var(--el-shadow);
   margin: 0 0 10px 0;
@@ -114,6 +112,32 @@ position: relative;*/
 ::-webkit-scrollbar-thumb {
   background-color: var(--main-text);
   box-shadow: 3px 3px 5px var(--el-shadow);
+}
+
+/* A lot of this is for vue transitions */
+.vidQueue {
+  font-size: 0.8em;
+
+  text-overflow: ellipsis;
+  overflow: hidden;
+  width: 100%;
+  white-space: nowrap;
+  padding: 2px 4px 2px 4px;
+}
+.vidQueue-item {
+  transition: all 0.5s;
+  display: block;
+  margin-right: 10px;
+}
+.vidQueue-enter {
+  opacity: 0;
+  transform: translateX(30px);
+}
+.vidQueue-leave-active {
+  display: none;
+}
+.vidQueue-move {
+  transition: transform 0.5s;
 }
 
 #volumeContainer {
@@ -245,33 +269,8 @@ position: relative;*/
   margin: 0;
   padding: 0;
   position: fixed;
-  background: black;
+  background: var(--el-border);
   top: 31px;
   left: 12px;
   text-align: center;
-}
-
-.vidQueue {
-  font-size: 0.8em;
-
-  text-overflow: ellipsis;
-  overflow: hidden;
-  width: 100%;
-  white-space: nowrap;
-  padding: 2px 4px 2px 4px;
-}
-.vidQueue-item {
-  transition: all 1s;
-  display: block;
-  margin-right: 10px;
-}
-.vidQueue-enter {
-  opacity: 0;
-  transform: translateX(30px);
-}
-.vidQueue-leave-active {
-  display: none;
-}
-.vidQueue-move {
-  transition: transform 1s;
 }
