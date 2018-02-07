@@ -107,11 +107,12 @@ button.disabled, button.disabled:hover, button.disabled:active {
   vertical-align: top;
 }
 
-::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar { width: 15px; }
 ::-webkit-scrollbar-track { background-color: rgba(0,0,0,0); }
 ::-webkit-scrollbar-thumb {
-  background-color: var(--main-text);
+  background-color: rgba(52, 73, 94,1.0);
   box-shadow: 3px 3px 5px var(--el-shadow);
+  border: 1px solid var(--el-border);
 }
 
 /* A lot of this is for vue transitions */
