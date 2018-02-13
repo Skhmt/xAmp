@@ -34,7 +34,7 @@ Opening a playlist will overwrite the internal playlist, not add to it.
 1. Go to the [releases](https://github.com/Skhmt/xAmp/releases) page and get the latest .zip named something like: `xAmp-#.#.#-macOS.zip`
 2. Extract everything and put it anywhere
 3. Right-click `xAmp` and click `Open`
-4. Click `Run anyway`
+4. Click `Open` in the popup window
 
 ## Building (Optional unless you're on linux)
 
