@@ -1,8 +1,7 @@
 {
 	"name": "xAmp",
 	"description": "Youtube music player",
-	"product_string": "xAmp",
-	"version": "0.3.0",
+	"version": "0.4.0",
 	"main": "app.html",
 	"dependencies": {
 	},
