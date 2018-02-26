@@ -281,7 +281,7 @@ button.disabled, button.disabled:hover, button.disabled:active {
   height: calc(100vh - 31px);
   width: calc(100vw - 2px);
   background-color: var(--el-background);
-  text-align: center;
+  /* text-align: center; */
   display: none;
   position: absolute;
   z-index: 9001;
@@ -290,10 +290,12 @@ button.disabled, button.disabled:hover, button.disabled:active {
   border-style: dashed;
   border-color: var(--splashy);
   border-width: 10px;
+  justify-content: center;
+  align-items: center;
 }
 
 #drag svg {
-  position: relative;
+  /* position: relative;
   top: 50%;
-  transform: translateY(-50%);
+  transform: translateY(-50%); */
 }

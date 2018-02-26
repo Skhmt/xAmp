@@ -15,7 +15,10 @@
 
 	<div id="app" style="width: 100%;" class="noSelect">
 		<div id="titleBar" class="fullWidth">
-			<div id="vidTitle" class="glassTitle drag" v-html="currentVid.title"></div>
+			<div id="vidTitle" class="glassTitle drag">
+				<img src="img/icon_shadow.png" style="height: 100%; width: auto;">
+				<span v-html="currentVid.title"></span>
+			</div>
 			<button id="minimizeButton" @click="minimize" title="Minimize"><i class="fas fa-fw fa-minus"></i></button>
 			<button id="closeButton" @click="close" title="Quit"><i class="fas fa-fw fa-times"></i></button>
 		</div>

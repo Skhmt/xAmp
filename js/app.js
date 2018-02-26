@@ -545,35 +545,37 @@ window.onkeydown = e => {
 	}
 }
 
-window.ondragover = function (e) {
+window.ondragover = e => {
 	e.preventDefault()
 	return false
 }
-window.ondragleave = function (e) {
+window.ondragleave = e => {
 	e.preventDefault()
 	return false
 }
-window.ondrop = function (e) {
+window.ondrop = e => {
 	e.preventDefault()
 	return false
 }
 
-const dragEl = document.getElementById('drag')
+const $drag = document.getElementById('drag')
+const $mainContent = document.getElementById('mainContent')
 
-data.cache.body.ondragover = function (e) {
-	dragEl.style.display = 'block'
+$mainContent.ondragover = () => {
+	$drag.style.display = 'flex'
 	return false
 }
-dragEl.ondragleave = function (e) {
-	dragEl.style.display = 'none'
+$drag.ondragleave = () => {
+	$drag.style.display = 'none'
 	return false
 }
-window.onmouseout = function (e) {
-	dragEl.style.display = 'none'
-}
-dragEl.ondrop = e => {
+// $drag.onmouseout = () => {
+// 	$drag.style.display = 'none'
+// 	return false
+// }
+$drag.ondrop = e => {
 	e.preventDefault()
-	dragEl.style.display = 'none'
+	$drag.style.display = 'none'
 	
 	Array.from(e.dataTransfer.items).forEach(i => {
 		const path = i.getAsFile().path
