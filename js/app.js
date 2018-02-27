@@ -569,10 +569,6 @@ $drag.ondragleave = () => {
 	$drag.style.display = 'none'
 	return false
 }
-// $drag.onmouseout = () => {
-// 	$drag.style.display = 'none'
-// 	return false
-// }
 $drag.ondrop = e => {
 	e.preventDefault()
 	$drag.style.display = 'none'
