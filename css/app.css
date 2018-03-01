@@ -188,6 +188,24 @@ button.disabled, button.disabled:hover, button.disabled:active {
   box-shadow: 0 3px 5px var(--el-shadow);
 }
 
+#ytCover {
+  /* height: 268px; */
+  height: calc(100vh - 481px);
+  width: calc(100vw - 24px);
+  margin: 0;
+  padding: 0;
+  position: fixed;
+  background: var(--el-border);
+  top: 31px;
+  left: 12px;
+  text-align: center;
+}
+
+#ytCover img {
+  height: 100%;
+  width: auto;
+}
+
 #vidTitle {
   text-overflow: ellipsis;
   overflow: hidden;
@@ -231,7 +249,7 @@ button.disabled, button.disabled:hover, button.disabled:active {
   height: 29px;
   width: 200px;
   padding: 5px;
-  margin: 0;
+  margin: 0 -5px 0 0;
 }
 
 #mainContent {
@@ -263,18 +281,6 @@ button.disabled, button.disabled:hover, button.disabled:active {
 #selectionControls {
   position: absolute;
   right: 11px;
-}
-
-#ytCover {
-  height: 268px;
-  width: 476px;
-  margin: 0;
-  padding: 0;
-  position: fixed;
-  background: var(--el-border);
-  top: 31px;
-  left: 12px;
-  text-align: center;
 }
 
 #drag {

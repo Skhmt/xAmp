@@ -22,21 +22,21 @@
 			<button id="minimizeButton" @click="minimize" title="Minimize"><i class="fas fa-fw fa-minus"></i></button>
 			<button id="closeButton" @click="close" title="Quit"><i class="fas fa-fw fa-times"></i></button>
 		</div>
-		<div id="drag">
+		<div id="drag" @drop="drop" @dragleave="dragleave">
 			<i class="fas fa-download fa-10x"></i>
 		</div>
-		<div id="mainContent" @click.self="clear">
-			<div id="ytPlayer" class="fullWidth"></div>
-			<div id="ytCover"><img src="img/icon_shadow.png" style="height: 100%; width: auto;"></div>
-			<div id="scrubContainer" class="fullWidth"><div id="scrub"></div></div>
+		<div id="mainContent" @click.self="clear" @dragenter="dragenter">
+			<div id="ytPlayer" class="fullWidth" @dragenter="dragenter"></div>
+			<div id="ytCover" @click="playpause"><img src="img/icon_shadow.png" class="noSelect"></div>
+			<div id="scrubContainer" @mousedown="clickScrub" class="fullWidth"><div id="scrub"></div></div>
 			<div id="controlsContainer" class="fullWidth" @click="clear">
-				<div id="volumeContainer"><div id="volume"></div></div>
+				<div id="volumeContainer" @mousedown="clickVol"><div id="volume"></div></div>
 				<button @click="prev" title="Previous video"><i class="fas fa-fw fa-step-backward"></i></button>
 				<button id="playpause" @click="playpause" title=""><i class="fas fa-fw fa-pause"></i></button>
 				<button @click="next" title="Next video"><i class="fas fa-fw fa-step-forward"></i></button>
 				&nbsp;&nbsp;
-				<button @click="shuffle" title="Shuffle playlist"><i class="fas fa-fw fa-random"></i></button>
 				<button @click="hidevid" title="Toggle video"><i class="fas fa-fw fa-eye-slash"></i></button>
+				<button @click="hideplaylist" title="Toggle playlist"><i class="fas fa-fw fa-bars"></i></button>
 				<span id="time" class="glassTitle">{{ currentTime }} / {{ duration }}</span>
 			</div>
 			<div id="queueContainer" @click.self="clear" class="glass fullWidth">
@@ -50,13 +50,13 @@
 					</li>
 				</transition-group>
 			</div>
-			<div @click.self="clear" class="fullWidth">
+			<div id="queueButtons" @click.self="clear" class="fullWidth">
 				<button @click="open" title="Open playlist"><i class="fas fa-fw fa-folder-open"></i></button>
 				<button @click="save" title="Save playlist"><i class="fas fa-fw fa-save"></i></button>
-				&nbsp;&nbsp;
 				<input id="vidField" @keydown.enter="add" v-model="vidInput" class="glass selectable" placeholder="youtube url">
 				<button @click="add" title="Add youtube url"><i class="fas fa-fw fa-plus"></i></button>
 				<span id="selectionControls">
+					<button @click="shuffle" title="Shuffle playlist"><i class="fas fa-fw fa-random"></i></button>
 					<button @click="up" title="Move selection up"><i class="fas fa-fw fa-arrow-up"></i></button>
 					<button @click="down" title="Move selection down"><i class="fas fa-fw fa-arrow-down"></i></button>
 					<button @click="remove" title="Delete selection"><i class="fas fa-fw fa-trash-alt"></i></button>

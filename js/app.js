@@ -19,17 +19,25 @@ let data = {
 	blockScrub: false,
 	blockVol: false,
 	selected: null,
-	cache: {
+	el: {
 		video_ad: undefined,
 		scrub: undefined,
 		scrubContainer: undefined,
 		volumeContainer: undefined,
+		queueContainer: undefined,
+		queueButtons: undefined,
 		volume: undefined,
 		pp: undefined,
 		body: document.getElementsByTagName('body')[0],
+		drag: undefined,
+		mainContent: undefined,
+		ytCover: undefined,
+		ytPlayer: undefined,
 	},
 	refreshed: false,
 	isDragging: false,
+	hideVid: false,
+	hideQueue: false,
 }
 
 const loadQueue = localStorage.getItem('vidQueue')
@@ -39,65 +47,88 @@ let vm = new Vue({
 	el: '#app',
 	data,
 	methods: {
-		next: function () {
+		next () {
 			clearSelected()
 			nextVid()
 		},
-		prev: function () {
+		prev () {
 			clearSelected()
 			prevVid()
 		},
-		shuffle: function () {
+		shuffle () {
 			clearSelected()
 
 			this.vidQueue = shuffle(this.vidQueue)
 			saveQueue()
 		},
-		add: function () {
+		add () {
 			clearSelected()
 
 			addVid(this.vidInput)
 			this.vidInput = ''
 		},
 		remove: deleteSelected,
-		close: function () {
+		close () {
 			nw.App.quit()
 		},
-		minimize: function () {
+		minimize () {
 			nw.Window.get().minimize()
 		},
-		select: function (ind) {
+		select (ind) {
 			select(ind)
 		},
 		up: upSelected,
 		down: downSelected,
 		clear: clearSelected,
-		save: function () {
+		save () {
 			document.getElementById('saveFile').click()
 		},
-		open: function () {
+		open () {
 			document.getElementById('openFile').click()
 		},
-		hidevid: function () {
-			const $yp = document.getElementById('ytPlayer')
-			const win = nw.Window.get()
-
-			if ($yp.style.display == 'none') { // show the video, this is the default settings
-				$yp.style.display = ''
-				document.getElementById('queueContainer').style.height = '306px'
-				document.getElementById('scrubContainer').style.marginTop = '10px'
-				win.setMinimumSize(nw.App.manifest.window.min_width, nw.App.manifest.window.min_height)
-				win.resizeBy(0, 270)
-			}
-			else { // hide the video
-				$yp.style.display = 'none'
-				document.getElementById('queueContainer').style.height = 'calc(100vh - 161px)'
-				document.getElementById('scrubContainer').style.marginTop = '0px'
-				win.setMinimumSize(nw.App.manifest.window.min_width, nw.App.manifest.window.min_height - 450) // -270 works
-				win.resizeBy(0, -270)
-			}
+		clickScrub (e) {
+			this.blockScrub = true
+			scrubMove(e)
+			this.el.body.addEventListener('mousemove', scrubMove)
+		},
+		clickVol (e) {
+			this.blockVol = true
+			volMove(e)
+			this.el.body.addEventListener('mousemove', volMove)
+		},
+		hidevid () {
+			this.hideVid = !this.hideVid
+			redraw()
+		},
+		hideplaylist () {
+			this.hideQueue = !this.hideQueue
+			redraw()
 		},
 		playpause: playpause,
+		dragenter (e) {
+			this.el.drag.style.display = 'flex'
+			return false
+		},
+		dragleave (e) {
+			this.el.drag.style.display = 'none'
+			return false
+		},
+		drop (e) {
+			this.el.drag.style.display = 'none'
+
+			Array.from(e.dataTransfer.items).forEach(i => {
+				const path = i.getAsFile().path
+				const entry = i.webkitGetAsEntry()
+				if (entry.isFile) {
+					openFile(path)
+				}
+				else if (entry.isDirectory) {
+					// do nothing
+				}
+			})
+		
+			return false
+		},
 	},
 })
 
@@ -129,26 +160,21 @@ function onYouTubeIframeAPIReady() {
 }
 
 function runOnce() {
+	
+	data.el.ytPlayer = document.getElementById('ytPlayer')
+	data.el.scrub = document.getElementById('scrub')
+	data.el.scrubContainer = document.getElementById('scrubContainer')
+	data.el.volumeContainer = document.getElementById('volumeContainer')
+	data.el.pp = document.getElementById('playpause')
+	data.el.volume = document.getElementById('volume')
+	data.el.drag = document.getElementById('drag')
+	data.el.mainContent = document.getElementById('mainContent')
+	data.el.queueContainer = document.getElementById('queueContainer')
+	data.el.queueButtons = document.getElementById('queueButtons')
+	data.el.ytCover = document.getElementById('ytCover')
+
 	ytPlayer.setVolume(50);
-
-	data.cache.scrub = document.getElementById('scrub')
-	data.cache.scrubContainer = document.getElementById('scrubContainer')
-	data.cache.scrubContainer.addEventListener('mousedown', e => {
-		data.blockScrub = true
-		scrubMove(e)
-		data.cache.body.addEventListener('mousemove', scrubMove)
-	})
-	data.cache.volumeContainer = document.getElementById('volumeContainer')
-	data.cache.volumeContainer.addEventListener('mousedown', e => {
-		data.blockVol = true
-		volMove(e)
-		data.cache.body.addEventListener('mousemove', volMove)
-	})
-
-	data.cache.pp = document.getElementById('playpause')
-	data.cache.volume = document.getElementById('volume')
-
-	document.getElementById('ytCover').remove()
+	data.el.ytCover.style.opacity = '0'
 
 	requestAnimationFrame(songStateChecker)
 }
@@ -170,36 +196,36 @@ function songStateChecker() {
 
 		// video scrub bar
 		if (!data.blockScrub) {
-			const scrubWidth = (currentTime / duration) * data.cache.scrubContainer.clientWidth
-			data.cache.scrub.style.width = scrubWidth + 'px'
+			const scrubWidth = (currentTime / duration) * data.el.scrubContainer.clientWidth
+			data.el.scrub.style.width = scrubWidth + 'px'
 		}
 
 		// volume bar
 		if (!data.blockVol) {
-			const volWidth = ytPlayer.getVolume() * 0.01 * data.cache.volumeContainer.clientWidth
-			data.cache.volume.style.width = volWidth + 'px'
+			const volWidth = ytPlayer.getVolume() * 0.01 * data.el.volumeContainer.clientWidth
+			data.el.volume.style.width = volWidth + 'px'
 		}
 
 		// play/pause button
-		if (state === 2 && data.cache.pp.title !== 'Play video') { // currently paused, set ui to "play"
-			data.cache.pp.title = 'Play video'
-			const $icon = data.cache.pp.children[0]
+		if (state === 2 && data.el.pp.title !== 'Play video') { // currently paused, set ui to "play"
+			data.el.pp.title = 'Play video'
+			const $icon = data.el.pp.children[0]
 			$icon.classList.remove('fa-pause')
 			$icon.classList.add('fa-play')
 		}
-		else if (state === 1 && data.cache.pp.title !== 'Pause video') { // currently playing, ui to "pause"
-			data.cache.pp.title = 'Pause video'
-			const $icon = data.cache.pp.children[0]
+		else if (state === 1 && data.el.pp.title !== 'Pause video') { // currently playing, ui to "pause"
+			data.el.pp.title = 'Pause video'
+			const $icon = data.el.pp.children[0]
 			$icon.classList.remove('fa-play')
 			$icon.classList.add('fa-pause')
 		}
 
 		// ghetto adblocking
-		if (data.cache.video_ad === undefined) {
-			data.cache.video_ad = document.getElementById('ytPlayer').contentWindow.document.getElementsByClassName('video-ads')[0]
+		if (data.el.video_ad === undefined) {
+			data.el.video_ad = data.el.ytPlayer.contentWindow.document.getElementsByClassName('video-ads')[0]
 		}
 		else {
-			data.cache.video_ad.style.display = 'none'
+			data.el.video_ad.style.display = 'none'
 		}
 
 	} catch (e) {}
@@ -397,23 +423,23 @@ function select(ind) {
 function volMove(e) {
 	// let pixelsFromLeft = e.pageX - data.cache.volumeContainer.offsetLeft;
 	let pixelsFromLeft = e.pageX - 12
-	const containerWidth = data.cache.volumeContainer.clientWidth
+	const containerWidth = data.el.volumeContainer.clientWidth
 	if (pixelsFromLeft > containerWidth) pixelsFromLeft = containerWidth
 	else if (pixelsFromLeft < 0) pixelsFromLeft = 0
 	const vol = Math.round( (pixelsFromLeft/containerWidth*100) )
 	ytPlayer.setVolume(vol)
 	requestAnimationFrame(() => {
-		data.cache.volume.style.width = `${pixelsFromLeft}px`
+		data.el.volume.style.width = `${pixelsFromLeft}px`
 	})
 }
 
 function scrubMove(e) {
-	let pixelsFromLeft = e.pageX - data.cache.scrubContainer.offsetLeft
-	const containerWidth = data.cache.scrubContainer.clientWidth
+	let pixelsFromLeft = e.pageX - data.el.scrubContainer.offsetLeft
+	const containerWidth = data.el.scrubContainer.clientWidth
 	if (pixelsFromLeft > containerWidth) pixelsFromLeft = containerWidth
 	else if (pixelsFromLeft < 0) pixelsFromLeft = 0
 	requestAnimationFrame(() => {
-		data.cache.scrub.style.width = `${pixelsFromLeft}px`
+		data.el.scrub.style.width = `${pixelsFromLeft}px`
 	})
 }
 
@@ -425,6 +451,64 @@ function openFile(path) {
 	const rnPlaylist = fs.readFileSync(path).toString()
 	const arrayPlaylist = rnPlaylist.replace(/\r\n/g, '\n').split('\n')
 	arrayPlaylist.forEach(x => addVid(x))
+}
+
+function redraw() {
+	const win = nw.Window.get()
+	const min_width = nw.App.manifest.window.min_width
+	const min_height = nw.App.manifest.window.min_height
+
+	if (!data.hideVid && !data.hideQueue) { // default
+		data.el.ytPlayer.style.display = ''
+		data.el.ytCover.style.display = ''
+		data.el.queueContainer.style.display = ''
+		data.el.queueButtons.style.display = ''
+		data.el.ytPlayer.style.height = 'calc(100vh - 481px)'
+		data.el.ytCover.style.height = 'calc(100vh - 481px)'
+		data.el.queueContainer.style.height = '306px'
+		data.el.scrubContainer.style.marginTop = '10px'
+		win.setMinimumSize(min_width, min_height)
+		win.setMaximumSize(2147483647, 2147483647)
+		// win.resizeBy(0, 0)
+	}
+	else if (data.hideVid && !data.hideQueue) {
+		data.el.ytPlayer.style.display = 'none'
+		data.el.ytCover.style.display = 'none'
+		data.el.queueContainer.style.display = ''
+		data.el.queueButtons.style.display = ''
+		data.el.ytPlayer.style.height = 'calc(100vh - 481px)'
+		data.el.ytCover.style.height = 'calc(100vh - 481px)'
+		data.el.queueContainer.style.height = 'calc(100vh - 161px)'
+		data.el.scrubContainer.style.marginTop = '0px'
+		win.setMinimumSize(min_width, min_height - 270)
+		win.setMaximumSize(2147483647, 2147483647)
+		win.resizeBy(0, -270)
+	}
+	else if (!data.hideVid && data.hideQueue) {
+		data.el.ytPlayer.style.display = ''
+		data.el.ytCover.style.display = ''
+		data.el.queueContainer.style.display = 'none'
+		data.el.queueButtons.style.display = 'none'
+		data.el.ytPlayer.style.height = 'calc(100vh - 125px)'
+		data.el.ytCover.style.height = 'calc(100vh - 125px)'
+		data.el.queueContainer.style.height = '306px'
+		data.el.scrubContainer.style.marginTop = '10px'
+		win.setMinimumSize(min_width, min_height - 356)
+		win.setMaximumSize(2147483647, 2147483647)
+		win.resizeBy(0, -356)
+	}
+	else { // hide both
+		data.el.ytPlayer.style.display = 'none'
+		data.el.ytCover.style.display = 'none'
+		data.el.queueContainer.style.display = 'none'
+		data.el.queueButtons.style.display = 'none'
+		data.el.ytPlayer.style.height = '0px'
+		data.el.ytCover.style.height = '0px'
+		data.el.queueContainer.style.height = '0px'
+		data.el.scrubContainer.style.marginTop = '0px'
+		win.setMinimumSize(min_width, min_height - 356 - 270 - 15)
+		win.setMaximumSize(2147483647, min_height - 356 - 270 - 15)
+	}
 }
 
 // Listeners
@@ -445,21 +529,21 @@ document.getElementById('openFile').addEventListener('change', evt => {
 	}
 }, false)
 
-data.cache.body.addEventListener('mouseup', e => {
+data.el.body.addEventListener('mouseup', e => {
 	if (data.blockVol) {
-		data.cache.body.removeEventListener('mousemove', volMove);
+		data.el.body.removeEventListener('mousemove', volMove);
 		// let pixelsFromLeft = e.pageX - data.cache.volumeContainer.offsetLeft;
 		let pixelsFromLeft = e.pageX - 12
-		const containerWidth = data.cache.volumeContainer.clientWidth
+		const containerWidth = data.el.volumeContainer.clientWidth
 		if (pixelsFromLeft > containerWidth) pixelsFromLeft = containerWidth
 		else if (pixelsFromLeft < 0) pixelsFromLeft = 0
 		const vol = Math.round( (pixelsFromLeft/containerWidth*100) )
 		ytPlayer.setVolume(vol)
 		requestAnimationFrame(() => data.blockVol = false)
 	} else if (data.blockScrub) {
-		data.cache.body.removeEventListener('mousemove', scrubMove)
-		let pixelsFromLeft = e.pageX - data.cache.scrubContainer.offsetLeft
-		const containerWidth = data.cache.scrubContainer.clientWidth
+		data.el.body.removeEventListener('mousemove', scrubMove)
+		let pixelsFromLeft = e.pageX - data.el.scrubContainer.offsetLeft
+		const containerWidth = data.el.scrubContainer.clientWidth
 		if (pixelsFromLeft > containerWidth) pixelsFromLeft = containerWidth
 		else if (pixelsFromLeft < 0) pixelsFromLeft = 0
 		const scrubTimePercent = Math.round( (pixelsFromLeft/containerWidth*100) ) * 0.01
@@ -555,34 +639,5 @@ window.ondragleave = e => {
 }
 window.ondrop = e => {
 	e.preventDefault()
-	return false
-}
-
-const $drag = document.getElementById('drag')
-const $mainContent = document.getElementById('mainContent')
-
-$mainContent.ondragover = () => {
-	$drag.style.display = 'flex'
-	return false
-}
-$drag.ondragleave = () => {
-	$drag.style.display = 'none'
-	return false
-}
-$drag.ondrop = e => {
-	e.preventDefault()
-	$drag.style.display = 'none'
-	
-	Array.from(e.dataTransfer.items).forEach(i => {
-		const path = i.getAsFile().path
-		const entry = i.webkitGetAsEntry()
-		if (entry.isFile) {
-			openFile(path)
-		}
-		else if (entry.isDirectory) {
-			// do nothing
-		}
-	})
-
 	return false
 }
