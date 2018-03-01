@@ -27,7 +27,7 @@
 		</div>
 		<div id="mainContent" @click.self="clear" @dragenter="dragenter">
 			<div id="ytPlayer" class="fullWidth" @dragenter="dragenter"></div>
-			<div id="ytCover" @click="playpause"><img src="img/icon_shadow.png" class="noSelect"></div>
+			<div id="ytCover" @click="playpause" v-show="!this.hideVid"><img src="img/icon_shadow.png" class="noSelect"></div>
 			<div id="scrubContainer" @mousedown="clickScrub" class="fullWidth"><div id="scrub"></div></div>
 			<div id="controlsContainer" class="fullWidth" @click="clear">
 				<div id="volumeContainer" @mousedown="clickVol"><div id="volume"></div></div>
@@ -39,7 +39,7 @@
 				<button @click="hideplaylist" title="Toggle playlist"><i class="fas fa-fw fa-bars"></i></button>
 				<span id="time" class="glassTitle">{{ currentTime }} / {{ duration }}</span>
 			</div>
-			<div id="queueContainer" @click.self="clear" class="glass fullWidth">
+			<div id="queueContainer" @click.self="clear" class="glass fullWidth" v-show="!this.hideQueue">
 				<transition-group name="vidQueue" tag="ul">
 					<li class="vidQueue"
 						v-for="(vid, index) in vidQueue" 
@@ -50,7 +50,7 @@
 					</li>
 				</transition-group>
 			</div>
-			<div id="queueButtons" @click.self="clear" class="fullWidth">
+			<div id="queueButtons" @click.self="clear" class="fullWidth" v-show="!this.hideQueue">
 				<button @click="open" title="Open playlist"><i class="fas fa-fw fa-folder-open"></i></button>
 				<button @click="save" title="Save playlist"><i class="fas fa-fw fa-save"></i></button>
 				<input id="vidField" @keydown.enter="add" v-model="vidInput" class="glass selectable" placeholder="youtube url">

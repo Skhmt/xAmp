@@ -459,53 +459,41 @@ function redraw() {
 	const min_height = nw.App.manifest.window.min_height
 
 	if (!data.hideVid && !data.hideQueue) { // default
-		data.el.ytPlayer.style.display = ''
-		data.el.ytCover.style.display = ''
-		data.el.queueContainer.style.display = ''
-		data.el.queueButtons.style.display = ''
 		data.el.ytPlayer.style.height = 'calc(100vh - 481px)'
 		data.el.ytCover.style.height = 'calc(100vh - 481px)'
 		data.el.queueContainer.style.height = '306px'
 		data.el.scrubContainer.style.marginTop = '10px'
+		data.el.ytPlayer.style.display = ''
 		win.setMinimumSize(min_width, min_height)
 		win.setMaximumSize(2147483647, 2147483647)
 		// win.resizeBy(0, 0)
 	}
 	else if (data.hideVid && !data.hideQueue) {
-		data.el.ytPlayer.style.display = 'none'
-		data.el.ytCover.style.display = 'none'
-		data.el.queueContainer.style.display = ''
-		data.el.queueButtons.style.display = ''
 		data.el.ytPlayer.style.height = 'calc(100vh - 481px)'
 		data.el.ytCover.style.height = 'calc(100vh - 481px)'
 		data.el.queueContainer.style.height = 'calc(100vh - 161px)'
 		data.el.scrubContainer.style.marginTop = '0px'
+		data.el.ytPlayer.style.display = 'none'
 		win.setMinimumSize(min_width, min_height - 270)
 		win.setMaximumSize(2147483647, 2147483647)
 		win.resizeBy(0, -270)
 	}
 	else if (!data.hideVid && data.hideQueue) {
-		data.el.ytPlayer.style.display = ''
-		data.el.ytCover.style.display = ''
-		data.el.queueContainer.style.display = 'none'
-		data.el.queueButtons.style.display = 'none'
 		data.el.ytPlayer.style.height = 'calc(100vh - 125px)'
 		data.el.ytCover.style.height = 'calc(100vh - 125px)'
 		data.el.queueContainer.style.height = '306px'
 		data.el.scrubContainer.style.marginTop = '10px'
+		data.el.ytPlayer.style.display = ''
 		win.setMinimumSize(min_width, min_height - 356)
 		win.setMaximumSize(2147483647, 2147483647)
 		win.resizeBy(0, -356)
 	}
 	else { // hide both
-		data.el.ytPlayer.style.display = 'none'
-		data.el.ytCover.style.display = 'none'
-		data.el.queueContainer.style.display = 'none'
-		data.el.queueButtons.style.display = 'none'
 		data.el.ytPlayer.style.height = '0px'
 		data.el.ytCover.style.height = '0px'
 		data.el.queueContainer.style.height = '0px'
 		data.el.scrubContainer.style.marginTop = '0px'
+		data.el.ytPlayer.style.display = 'none'
 		win.setMinimumSize(min_width, min_height - 356 - 270 - 15)
 		win.setMaximumSize(2147483647, min_height - 356 - 270 - 15)
 	}
