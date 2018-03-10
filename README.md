@@ -1,7 +1,7 @@
 # xAmp
 Cross platform youtube video player with an independent playlist from youtube.
 
-![xAmp screenshot](https://i.imgur.com/2CpuzOU.png)
+![xAmp screenshot](https://i.imgur.com/5o6wi69.png)
 
 The internal playlist isn't tied to playlist text files, modifying the internal playlist won't make any file changes unless you save them, but the current playlist will be saved separately.
 
