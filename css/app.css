@@ -284,7 +284,7 @@ button.disabled, button.disabled:hover, button.disabled:active {
 }
 
 #drag {
-  height: calc(100vh - 31px);
+  height: calc(100vh - 32px);
   width: calc(100vw - 2px);
   background-color: var(--el-background);
   display: none;
