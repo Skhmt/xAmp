@@ -235,11 +235,7 @@ function songStateChecker() {
 function secondsToMinutes(totalSeconds) {
 	const minutes = (totalSeconds / 60)|0
 	const seconds = (totalSeconds % 60)|0
-	let leadingMinutesZero = ''
-	if (minutes < 10) leadingMinutesZero = '0'
-	let leadingSecondsZero = ''
-	if (seconds < 10) leadingSecondsZero = '0'
-	return `${leadingMinutesZero}${minutes}:${leadingSecondsZero}${seconds}`
+	return `${minutes.toString().padStart(2,0)}:${seconds.toString().padStart(2,0)}`
 }
 
 function getYoutubeTitle(id, fn) {
