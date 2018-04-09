@@ -2,7 +2,7 @@
 	"name": "xAmp",
 	"product_string": "xAmp",
 	"description": "Youtube music player",
-	"version": "0.5.0",
+	"version": "0.5.1",
 	"main": "app.html",
 	"dependencies": {
 	},
@@ -16,5 +16,6 @@
 		"toolbar": false,
 		"transparent": true,
 		"icon": "img/icon_shadow.png"
-	}
+	},
+	"chromium-args": "--disable-raf-throttling"
 }
