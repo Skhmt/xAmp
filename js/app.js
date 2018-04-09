@@ -149,7 +149,7 @@ function onYouTubeIframeAPIReady() {
 			'onReady': () => {
 				if (!data.refreshed) {
 					document.getElementById('ytPlayer').contentWindow.location.reload()
-					data.refreshed = true;
+					data.refreshed = true
 				}
 				else {
 					runOnce()
@@ -173,7 +173,7 @@ function runOnce() {
 	data.el.queueButtons = document.getElementById('queueButtons')
 	data.el.ytCover = document.getElementById('ytCover')
 
-	ytPlayer.setVolume(50);
+	ytPlayer.setVolume(50)
 	data.el.ytCover.style.opacity = '0'
 
 	requestAnimationFrame(songStateChecker)
@@ -417,7 +417,7 @@ function select(ind) {
 }
 
 function volMove(e) {
-	// let pixelsFromLeft = e.pageX - data.cache.volumeContainer.offsetLeft;
+	// let pixelsFromLeft = e.pageX - data.cache.volumeContainer.offsetLeft
 	let pixelsFromLeft = e.pageX - 12
 	const containerWidth = data.el.volumeContainer.clientWidth
 	if (pixelsFromLeft > containerWidth) pixelsFromLeft = containerWidth
@@ -515,7 +515,7 @@ document.getElementById('openFile').addEventListener('change', evt => {
 
 data.el.body.addEventListener('mouseup', e => {
 	if (data.blockVol) {
-		data.el.body.removeEventListener('mousemove', volMove);
+		data.el.body.removeEventListener('mousemove', volMove)
 		// let pixelsFromLeft = e.pageX - data.cache.volumeContainer.offsetLeft
 		let pixelsFromLeft = e.pageX - 12
 		const containerWidth = data.el.volumeContainer.clientWidth
