@@ -283,7 +283,7 @@ function nextVid() {
 }
 
 function prevVid() {
-	clearSelected();
+	clearSelected()
 	let time = ytPlayer.getCurrentTime()
 	if (time < 3) {
 		data.currentVid = ''
@@ -363,9 +363,9 @@ function shuffle(inputArray) {
 
 function clearSelected() {
 	if (typeof data.selected === 'number') {
-		let el = document.getElementById('vq'+data.selected);
-		el.style.background = '';
-		data.selected = null;
+		let el = document.getElementById('vq'+data.selected)
+		el.style.background = ''
+		data.selected = null
 	}
 }
 
@@ -499,7 +499,7 @@ function redraw() {
 
 document.getElementById('saveFile').addEventListener('change', evt => {
 	if (evt.target.value !== '') {
-		const saveString = data.vidQueue.reduce((acc, el) => acc + el.id + '\r\n', '');
+		const saveString = data.vidQueue.reduce((acc, el) => acc + el.id + '\r\n', '')
 		fs.writeFile(evt.target.value, saveString, err => {
 			if (err) console.error(err)
 		})
@@ -516,7 +516,7 @@ document.getElementById('openFile').addEventListener('change', evt => {
 data.el.body.addEventListener('mouseup', e => {
 	if (data.blockVol) {
 		data.el.body.removeEventListener('mousemove', volMove);
-		// let pixelsFromLeft = e.pageX - data.cache.volumeContainer.offsetLeft;
+		// let pixelsFromLeft = e.pageX - data.cache.volumeContainer.offsetLeft
 		let pixelsFromLeft = e.pageX - 12
 		const containerWidth = data.el.volumeContainer.clientWidth
 		if (pixelsFromLeft > containerWidth) pixelsFromLeft = containerWidth
