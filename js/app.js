@@ -38,6 +38,7 @@ let data = {
 	isDragging: false,
 	hideVid: false,
 	hideQueue: false,
+	lastStop: 0,
 }
 
 const loadQueue = localStorage.getItem('vidQueue')
@@ -149,7 +150,7 @@ function onYouTubeIframeAPIReady() {
 			'onReady': () => {
 				if (!data.refreshed) {
 					document.getElementById('ytPlayer').contentWindow.location.reload()
-					data.refreshed = true
+					data.refreshed = true;
 				}
 				else {
 					runOnce()
@@ -173,7 +174,7 @@ function runOnce() {
 	data.el.queueButtons = document.getElementById('queueButtons')
 	data.el.ytCover = document.getElementById('ytCover')
 
-	ytPlayer.setVolume(50)
+	ytPlayer.setVolume(50);
 	data.el.ytCover.style.opacity = '0'
 
 	requestAnimationFrame(songStateChecker)
@@ -184,8 +185,16 @@ function songStateChecker() {
 	try {
 		// unstarted: -1, ended: 0, playing: 1, paused: 2, buffering: 3, cued: 5
 		const state = ytPlayer.getPlayerState()
-		if (state === -1 || state === 0 || state === 5) {
+		if (state === 0 || state === 5) {
 			nextVid()
+			data.lastStop = 0
+		}
+		else if (state === -1) {
+			if (data.lastStop === 0) data.lastStop = Date.now()
+			else if (data.lastStop + 200 < Date.now()) {
+				nextVid()
+				data.lastStop = 0
+			}
 		}
 
 		// meta data
@@ -417,7 +426,7 @@ function select(ind) {
 }
 
 function volMove(e) {
-	// let pixelsFromLeft = e.pageX - data.cache.volumeContainer.offsetLeft
+	// let pixelsFromLeft = e.pageX - data.cache.volumeContainer.offsetLeft;
 	let pixelsFromLeft = e.pageX - 12
 	const containerWidth = data.el.volumeContainer.clientWidth
 	if (pixelsFromLeft > containerWidth) pixelsFromLeft = containerWidth
@@ -515,7 +524,7 @@ document.getElementById('openFile').addEventListener('change', evt => {
 
 data.el.body.addEventListener('mouseup', e => {
 	if (data.blockVol) {
-		data.el.body.removeEventListener('mousemove', volMove)
+		data.el.body.removeEventListener('mousemove', volMove);
 		// let pixelsFromLeft = e.pageX - data.cache.volumeContainer.offsetLeft
 		let pixelsFromLeft = e.pageX - 12
 		const containerWidth = data.el.volumeContainer.clientWidth
