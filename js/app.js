@@ -150,7 +150,7 @@ function onYouTubeIframeAPIReady() {
 			'onReady': () => {
 				if (!data.refreshed) {
 					document.getElementById('ytPlayer').contentWindow.location.reload()
-					data.refreshed = true;
+					data.refreshed = true
 				}
 				else {
 					runOnce()
@@ -174,7 +174,7 @@ function runOnce() {
 	data.el.queueButtons = document.getElementById('queueButtons')
 	data.el.ytCover = document.getElementById('ytCover')
 
-	ytPlayer.setVolume(50);
+	ytPlayer.setVolume(50)
 	data.el.ytCover.style.opacity = '0'
 
 	requestAnimationFrame(songStateChecker)
@@ -189,9 +189,11 @@ function songStateChecker() {
 			nextVid()
 			data.lastStop = 0
 		}
+		// waiting some ms before skipping an unstarted song, just in case it's having trouble
 		else if (state === -1) {
+			const waitTimeInMS = 200
 			if (data.lastStop === 0) data.lastStop = Date.now()
-			else if (data.lastStop + 200 < Date.now()) {
+			else if (data.lastStop + waitTimeInMS < Date.now()) {
 				nextVid()
 				data.lastStop = 0
 			}
@@ -206,13 +208,13 @@ function songStateChecker() {
 		// video scrub bar
 		if (!data.blockScrub) {
 			const scrubWidth = (currentTime / duration) * data.el.scrubContainer.clientWidth
-			data.el.scrub.style.width = scrubWidth + 'px'
+			data.el.scrub.style.width = `${scrubWidth}px`
 		}
 
 		// volume bar
 		if (!data.blockVol) {
 			const volWidth = ytPlayer.getVolume() * 0.01 * data.el.volumeContainer.clientWidth
-			data.el.volume.style.width = volWidth + 'px'
+			data.el.volume.style.width = `${volWidth}px`
 		}
 
 		// play/pause button
@@ -372,7 +374,7 @@ function shuffle(inputArray) {
 
 function clearSelected() {
 	if (typeof data.selected === 'number') {
-		let el = document.getElementById('vq'+data.selected)
+		let el = document.getElementById(`vq${data.selected}`)
 		el.style.background = ''
 		data.selected = null
 	}
@@ -426,7 +428,6 @@ function select(ind) {
 }
 
 function volMove(e) {
-	// let pixelsFromLeft = e.pageX - data.cache.volumeContainer.offsetLeft;
 	let pixelsFromLeft = e.pageX - 12
 	const containerWidth = data.el.volumeContainer.clientWidth
 	if (pixelsFromLeft > containerWidth) pixelsFromLeft = containerWidth
@@ -471,7 +472,6 @@ function redraw() {
 		data.el.ytPlayer.style.display = ''
 		win.setMinimumSize(min_width, min_height)
 		win.setMaximumSize(2147483647, 2147483647)
-		// win.resizeBy(0, 0)
 	}
 	else if (data.hideVid && !data.hideQueue) {
 		data.el.ytPlayer.style.height = 'calc(100vh - 481px)'
@@ -508,7 +508,7 @@ function redraw() {
 
 document.getElementById('saveFile').addEventListener('change', evt => {
 	if (evt.target.value !== '') {
-		const saveString = data.vidQueue.reduce((acc, el) => acc + el.id + '\r\n', '')
+		const saveString = data.vidQueue.reduce((acc, el) => `${acc}${el.id}\r\n`, '')
 		fs.writeFile(evt.target.value, saveString, err => {
 			if (err) console.error(err)
 		})
@@ -525,7 +525,6 @@ document.getElementById('openFile').addEventListener('change', evt => {
 data.el.body.addEventListener('mouseup', e => {
 	if (data.blockVol) {
 		data.el.body.removeEventListener('mousemove', volMove);
-		// let pixelsFromLeft = e.pageX - data.cache.volumeContainer.offsetLeft
 		let pixelsFromLeft = e.pageX - 12
 		const containerWidth = data.el.volumeContainer.clientWidth
 		if (pixelsFromLeft > containerWidth) pixelsFromLeft = containerWidth
@@ -618,7 +617,7 @@ window.onkeydown = e => {
 	}
 
 	function updateScroll() {
-		document.getElementById('vq'+data.selected).scrollIntoView({behavior: 'instant', block: 'nearest'})
+		document.getElementById(`vq${data.selected}`).scrollIntoView({behavior: 'instant', block: 'nearest'})
 	}
 }
 
